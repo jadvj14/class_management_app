@@ -1,0 +1,2 @@
+class ProfessorUserRating < ApplicationRecord
+end

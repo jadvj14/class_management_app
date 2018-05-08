@@ -1,0 +1,67 @@
+<div class="page-login">
+  <div class="ui center aligned segment">
+    <h2><i class="clipboard outline icon"></i> Course Management App</h2>
+  </div>
+  <h1 class="ui center aligned header"> Sign Up</h1>
+  <div class="ui centered grid container">
+
+    <div class="seven wide column">
+      <% unless flash[:message].nil? %>
+        <div class="ui icon warning message">
+          <i class="lock icon"></i>
+          <div class="content">
+            <div class="header">
+              Sign up failed!
+            </div>
+            <p><%= flash[:message] %></p>
+          </div>
+        </div>
+      <% end %>
+      <div class="ui fluid card">
+        <div class="content">
+          <%= form_tag("/save", method: 'post', class: 'ui form') do %>
+
+            <div class="field">
+              <%= label_tag(:username, "Username") %>
+              <%= text_field_tag(:username, '', placeholder: 'Username') %>
+            </div>
+
+            <div class="field">
+              <%= label_tag(:password, "Password") %>
+              <%= password_field_tag(:password, '', placeholder: 'Password') %>
+            </div>
+
+            <div class="field">
+              <%= label_tag(:confirm_password, "Confirm Password") %>
+              <%= password_field_tag(:confirm_password, '', placeholder: 'Confirm Password') %>
+            </div>
+
+            <div class="field">
+              <%= label_tag(:first_name, "First Name") %>
+              <%= text_field_tag(:first_name, '', placeholder: 'First Name') %>
+            </div>
+
+            <div class="field">
+              <%= label_tag(:middle_name, "Middle Name") %>
+              <%= text_field_tag(:middle_name, '', placeholder: 'Middle Name') %>
+            </div>
+
+            <div class="field">
+              <%= label_tag(:last_name, "Last Name") %>
+              <%= text_field_tag(:last_name, '', placeholder: 'Last Name') %>
+            </div>
+
+            <button class="ui primary labeled icon button" type="submit">
+              <i class="save icon"></i>
+              Sign Up
+            </button>
+
+          <% end %>
+        </div>
+      </div>
+      <div class="ui message">
+        Already have an account? <a href="/">Proceed to Login</a>
+      </div>
+    </div>
+  </div>
+</div>
