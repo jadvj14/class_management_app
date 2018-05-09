@@ -1,0 +1,2 @@
+module ClientAppControllerHelper
+end

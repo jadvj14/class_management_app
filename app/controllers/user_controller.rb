@@ -1,11 +1,38 @@
 class UserController < ApplicationController
+  skip_before_action :check_session
+  before_action :check_if_logged_in, :except => :logout
+  def check_if_logged_in
+    if session[:user_id]
+      redirect_to '/course/list'
+    end
+  end
 
   def root
 
   end
 
-  def authenticate
+  def logout
+    session[:user_id] = nil
+    session[:username] = nil
+    redirect_to '/'
+  end
 
+  def is_null(string)
+    string.nil? ? '' : string
+  end
+
+  def authenticate
+    flash[:message] = 'Invalid username or password'
+    user = User.find_by_username(params[:username])
+    if user
+      password = SCrypt::Password.new(user.password)
+      if password == params[:password]
+        flash[:message] = nil
+        session[:user_id] = user.id
+        session[:username] = is_null(user.first_name) + ' ' +  is_null(user.last_name)
+      end
+    end
+    redirect_to '/'
   end
 
   def sign_up

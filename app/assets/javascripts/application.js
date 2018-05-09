@@ -15,4 +15,5 @@
 //= require turbolinks
 //= require_tree .
 // Loads all Semantic javascripts
+//= require jquery
 //= require semantic-ui

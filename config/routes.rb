@@ -4,4 +4,7 @@ Rails.application.routes.draw do
   get 'sign_up', :to => 'user#sign_up'
   get 'authenticate', :to => 'user#authenticate'
   post 'save', :to => 'user#save'
+  post 'authenticate', :to => 'user#authenticate'
+  get 'course/list'
+  get 'logout', :to => 'user#logout'
 end
