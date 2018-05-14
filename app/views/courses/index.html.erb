@@ -1,0 +1,42 @@
+<button class="ui primary button">
+  <i class="plus icon"></i>
+  Add
+</button>
+<button class="ui green button">
+  <i class="pencil icon"></i>
+  Edit
+</button>
+<button class="ui red button">
+  <i class="trash icon"></i>
+  Delete
+</button>
+
+<table class="ui celled padded table">
+  <thead>
+  <tr>
+    <th><input type="checkbox"/></th>
+    <th>Code</th>
+    <th>Name</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% if @courses.length == 0 %>
+    <tr>
+      <td colspan="3">No results found</td>
+    </tr>
+  <% end %>
+  <% for course in @courses %>
+    <tr>
+      <td style="width: 20px">
+        <input type="checkbox"/>
+      </td>
+      <td class="single line">
+        <%= course.code %>
+      </td>
+      <td>
+        <%= course.name %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
