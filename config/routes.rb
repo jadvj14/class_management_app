@@ -6,5 +6,6 @@ Rails.application.routes.draw do
   post 'save', :to => 'user#save'
   post 'authenticate', :to => 'user#authenticate'
   get 'course/list'
+  resources :courses
   get 'logout', :to => 'user#logout'
 end

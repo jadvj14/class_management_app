@@ -7,6 +7,8 @@
 
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_link_tag '/lib/semantic-ui/semantic.min', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag '/lib/semantic-ui/semantic.min', 'data-turbolinks-track': 'reload' %>
 </head>
 
 <body>
@@ -19,6 +21,7 @@
               .sidebar('setting', 'transition', 'overlay')
               .sidebar('toggle');
         });
+        $(".rating").rating();
     });
 
 </script>

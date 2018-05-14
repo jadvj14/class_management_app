@@ -3,7 +3,7 @@ class UserController < ApplicationController
   before_action :check_if_logged_in, :except => :logout
   def check_if_logged_in
     if session[:user_id]
-      redirect_to '/course/list'
+      redirect_to '/courses'
     end
   end
 
