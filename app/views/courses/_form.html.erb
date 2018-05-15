@@ -1,3 +1,176 @@
-<form class="ui form">
+<script type="text/javascript">
+    var showSelectionTable = function () {
+        $('#addProfessorsModal')
+            .modal({
+                onApprove : function() {
+                    $("#addProfessorsTable").closest('table').find('td input:checkbox').each(function(){
+                        if($(this).is(':checked'))
+                        {
+                            var name = $(this).closest('tr').find($(".name")).html();
+                            var professorId = $(this).closest('tr').find($(".professor_id")).html();
+                            selectedProfessors.push({id: 0,professor_id: professorId, name: name, rating: 0  });
+                        }
+                    });
+                    parseDataToGrid('selectedProfessorsTable', selectedProfessors);
+                    addToSelectedProfessors();
+                    $('#selectAllProfessors').prop('checked', false);
+                    $(".disabled.rating").rating('disable');
+                    $(".enabled.rating").rating('enable');
+                }
+            })
+            .modal('show')
+        ;
+    };
 
+    var selectedProfessors = [];
+    <% for class_professor in @class_professors %>
+      selectedProfessors.push({id: <%= class_professor.id %>,professor_id: <%= class_professor.professor_id %>, name: '<%= class_professor.name %>', rating:  '<%= class_professor.rating %>'  });
+    <% end %>
+
+    var allProfessors = [];
+
+    <% for professor in @all_professors %>
+      allProfessors.push({professor_id: <%= professor.professor_id %>, name: '<%= professor.name %>', rating: 1 });
+    <% end %>
+
+
+    var addToSelectedProfessors = function(){
+      var newAllProfessors = [];
+      for (professor in allProfessors) {
+          var isSelected = false;
+          for (selectedProfessor in selectedProfessors) {
+              if (selectedProfessors[selectedProfessor].professor_id == allProfessors[professor].professor_id) {
+                  isSelected = true
+              }
+          }
+          if (!isSelected) {
+              newAllProfessors.push(allProfessors[professor]);
+          }
+      }
+      allProfessors = newAllProfessors;
+      parseDataToAddGrid('addProfessorsTable', allProfessors);
+    };
+
+    var parseDataToAddGrid = function(id, data) {
+        $('#' + id + ' tbody').empty();
+        for (i in data) {
+            var newRowContent = "<tr><td class='professor_id' style='display: none'> " + data[i]["professor_id"] + "</td><td><input type=checkbox /></td> <td class='name'>" + data[i]["name"] + "</td></tr>";
+            $('#' + id + ' tbody').append(newRowContent);
+        }
+
+        if (data.length == 0) {
+            var newRowContent = "<tr><td span=\"4\">No Results Found.</td></tr>";
+            $('#' + id + ' tbody').append(newRowContent);
+        }
+    };
+
+    var parseDataToGrid = function(id, data) {
+      $('#' + id + ' tbody').empty();
+      for (i in data) {
+          var newRowContent = "<tr><td><input type=checkbox /></td> <td>" + data[i]["name"] + "</td><td><div class=\"ui star disabled rating\" data-max-rating=\"5\" data-rating=\"" + data[i]["rating"] + "\"></div></td><td><div class=\"ui star enabled rating\" data-max-rating=\"5\" data-rating=\"" + data[i]["rating"] + "\"></div></td></tr>";
+          $('#' + id + ' tbody').append(newRowContent);
+      }
+
+      if (data.length == 0) {
+          var newRowContent = "<tr><td span=\"4\">No Results Found.</td></tr>";
+          $('#' + id + ' tbody').append(newRowContent);
+      }
+    };
+
+    $(document).ready(function(e) {
+        parseDataToGrid('selectedProfessorsTable', '');
+        addToSelectedProfessors();
+
+        $('#selectAllProfessors').click(function (e) {
+            $(this).closest('table').find('td input:checkbox').prop('checked', this.checked);
+        });
+    });
+
+</script>
+
+<form class="ui form">
+  <div class="two fields">
+    <div class="field">
+      <label>Code</label>
+      <input type="text" name="code" placeholder="Code">
+    </div>
+  </div>
+  <div class="two fields">
+    <div class="field">
+      <label>Name</label>
+      <input type="text" name="name" placeholder="Name">
+    </div>
+  </div>
+  <hr/>
+  <h2>Professors</h2>
+  <a class="ui blue button" onclick="showSelectionTable()">
+    <i class="plus icon"></i>
+    Add
+  </a>
+  <a class="ui red button">
+    <i class="trash icon"></i>
+    Delete
+  </a>
+
+  <table class="ui celled padded table" id="selectedProfessorsTable">
+    <thead>
+    <tr>
+      <th><input type="checkbox"/></th>
+      <th style="display: none">Id</th>
+      <th>Name</th>
+      <th>Average Rating</th>
+      <th>My Rating</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% if @class_professors.length == 0 %>
+      <tr id="defaultRow">
+        <td colspan="3">No results found</td>
+      </tr>
+    <% end %>
+    <% for class_professor in @class_professors %>
+      <tr>
+        <td style="width: 20px">
+          <input type="checkbox"/>
+        </td>
+        <td class="single line">
+          <%= class_professor.code %>
+        </td>
+        <td>
+          <%= class_professor.name %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <button class="ui green submit button">
+    <i class="save icon"></i>
+    Save
+  </button>
 </form>
+
+<div class="ui modal" id="addProfessorsModal">
+  <i class="close icon"></i>
+  <div class="header">
+    Add Professors
+  </div>
+  <div class="image content">
+    <table class="ui celled padded table" id="addProfessorsTable">
+      <thead>
+      <tr>
+        <th><input type="checkbox" id="selectAllProfessors"/></th>
+        <th style="display: none">Id</th>
+        <th>Name</th>
+      </tr>
+      </thead>
+      <tbody>
+
+      </tbody>
+    </table>
+  </div>
+  <div class="actions">
+    <div class="ui red button">Cancel</div>
+    <div class="ui green approve button">OK</div>
+  </div>
+</div>

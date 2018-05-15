@@ -52,7 +52,7 @@ class UserController < ApplicationController
     user.middle_name = params[:middle_name]
     user.last_name = params[:last_name]
     user.save
-
+    session[:username] = is_null(user.first_name) + ' ' +  is_null(user.last_name)
     session[:user_id] = user.id
     redirect_to :root
   end

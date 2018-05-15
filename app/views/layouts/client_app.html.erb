@@ -5,10 +5,10 @@
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
-  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  <%= stylesheet_link_tag '/lib/semantic-ui/semantic.min', media: 'all', 'data-turbolinks-track': 'reload' %>
-  <%= javascript_include_tag '/lib/semantic-ui/semantic.min', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track'=> 'reload' %>
+  <%= stylesheet_link_tag '/lib/semantic-ui/semantic.min', media: 'all', 'data-turbolinks-track' => 'reload' %>
+  <%= javascript_include_tag '/lib/semantic-ui/semantic.min', 'data-turbolinks-track' => 'reload' %>
 </head>
 
 <body>
@@ -21,16 +21,25 @@
               .sidebar('setting', 'transition', 'overlay')
               .sidebar('toggle');
         });
-        $(".rating").rating();
+
+
     });
 
 </script>
 
-<div id="sidebar-main" class="ui inverted left vertical sidebar menu">
-  <a class="item" id="course">Courses</a>
-  <a class="item" id="professor">Professors</a>
-  <a class="item" id="ratings">Ratings Report</a>
-
+<div id="sidebar-main" class="ui inverted left vertical sidebar icon menu">
+  <a class="item" id="courses">
+    <i class="list ol icon"></i>
+    Courses
+  </a>
+  <a class="item" id="professor">
+    <i class="address card icon"></i>
+    Professors
+  </a>
+  <a class="item" id="ratings">
+    <i class="folder open outline icon"></i>
+    Ratings Report
+  </a>
 </div>
 
 <!-- Top Fixed Menu -->
